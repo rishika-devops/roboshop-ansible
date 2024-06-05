@@ -17,6 +17,6 @@
      state: started
   - name: updating listener address
     ansible.builtin.lineinfile:
-     path: vim /etc/mongod.conf
+     path: /etc/mongod.conf
      regexp: '127.0.0.1'
      line: '0.0.0.0'
