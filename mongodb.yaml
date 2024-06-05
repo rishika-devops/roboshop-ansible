@@ -13,8 +13,8 @@
   - name: enabling and starting mongodb 
     ansible.builtin.service:
      name: mongod
-     enabled: yes
      state: started
+     enabled: yes
   - name: updating listener address
     ansible.builtin.replace:
      path: /etc/mongod.conf
