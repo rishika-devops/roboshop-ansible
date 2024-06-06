@@ -6,15 +6,14 @@
     ansible.builtin.dnf: 
      name: nginx
      state: present
-  - name: enable and start nginx
-    ansible.builtin.service: 
-     name: nginx
-     state: started
-     enabled: yes
   - name: removing default content
     ansible.builtin.file:
-     path: /usr/share/nginx/html/*
+     path: /usr/share/nginx/html/
      state: absent
+  - name: creating directory
+    ansible.builtin.file:
+     path: /usr/share/nginx/html/
+     state: directory
   - name: download content from web
     ansible.builtin.get_url:
      url: https://roboshop-builds.s3.amazonaws.com/web.zip
