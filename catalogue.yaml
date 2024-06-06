@@ -3,7 +3,7 @@
   become: yes
   tasks:
   - name: disabling current version and enabling nodejs18 version
-    ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
+    ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y ;
   - name: installing nodejs18 version
     ansible.builtin.package:
      name: nodejs
@@ -18,7 +18,7 @@
   - name: download catalogue code to tmp directory
     ansible.builtin.get_url:
      url: https://roboshop-builds.s3.amazonaws.com/catalogue.zip
-     dest: /tmp/catalogue.zip
+     dest: /tmp
   - name: unzipping code in app directory
     ansible.builtin.unarchive:
      src: /tmp/catalogue.zip
@@ -34,9 +34,7 @@
      dest: /etc/systemd/system/catalogue.service
   - name: reloading daemon
     ansible.builtin.systemd_service:
-     state: restarted
      daemon_reload: true
-     name: catalogue
   - name: copying mongo repo
     ansible.builtin.copy:
      src: mongodb.repo
@@ -52,8 +50,8 @@
     ansible.builtin.debug:
      msg: "product count:{{product_count}}"
   - name: load catalogue data
-    ansible.builtin.command: mongo --host MONGODB-SERVER-IPADDRESS < /app/schema/catalogue.js
-    when: product_count == "0"
+    ansible.builtin.command: mongo --host mongodb.sowjanyaaws.online < /app/schema/catalogue.js
+    when: product_count.stdout == "0"
   - name: start and enable catalogue
     ansible.builtin.service:
      name: catalogue
