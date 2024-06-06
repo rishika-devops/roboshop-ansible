@@ -24,8 +24,8 @@
      remote_src: yes
   - name: downloading dependancies
     ansible.builtin.shell: go mod init dispatch ; go get ; go build ;
-     args:
-      chdir: /app
+    args:
+     chdir: /app
   - name: copying dispatch service
     ansible.builtin.copy:
      src: dispatch.service
