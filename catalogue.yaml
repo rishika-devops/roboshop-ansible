@@ -30,7 +30,7 @@
      chdir: /app
   - name: copying catalogue service
     ansible.builtin.copy:
-     src: catalogue.repo
+     src: catalogue.service
      dest: /etc/systemd/system/catalogue.service
   - name: reloading daemon
     ansible.builtin.systemd_service:
