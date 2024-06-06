@@ -30,6 +30,8 @@
      chdir: /app
   - name: renaming shipping
     ansible.builtin.command: mv target/shipping-1.0.jar shipping.jar
+    args:
+     chdir: /app
   - name: copying shipping service
     ansible.builtin.copy:
       src: shipping.service
