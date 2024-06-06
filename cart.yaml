@@ -13,7 +13,7 @@
      name: roboshop
   - name: creating app directory
     ansible.builtin.file:
-     name: /app
+     path: /app
      type: directory
   - name: downloading application code
     ansible.builtin.get_url:
