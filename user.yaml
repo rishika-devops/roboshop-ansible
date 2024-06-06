@@ -54,7 +54,7 @@
      msg: "user count is::{{user}}"
   - name: loading user data
     ansible.builtin.command: mongo --host mongodb.sowjanyaaws.online < /app/schema/user.js
-    when: user_count.stdout == "0"
+    when: user.stdout == "0"
   - name: restarting user
     ansible.builtin.service:
      name: user
