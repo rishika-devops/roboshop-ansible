@@ -17,7 +17,7 @@
      state: directory
   - name: downloading application code
     ansible.builtin.get_url:
-     src: https://roboshop-builds.s3.amazonaws.com/cart.zip
+     url: https://roboshop-builds.s3.amazonaws.com/cart.zip
      dest: /tmp/cart.zip
   - name: unzipping the code
     ansible.builtin.unarchive:
