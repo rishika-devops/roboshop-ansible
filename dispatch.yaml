@@ -11,8 +11,8 @@
      name: roboshop
   - name: creating app directory
     ansible.builtin.file:
-     name: /app
-     type: directory
+     path: /app
+     state: directory
   - name: downloading  dispatch content from web
     ansible.builtin.get_url:
      src: https://roboshop-builds.s3.amazonaws.com/dispatch.zip
