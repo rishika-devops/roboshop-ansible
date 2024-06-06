@@ -1,0 +1,62 @@
+- name: configuring shipping
+  hosts: shipping
+  become: yes
+  vars:
+   mysql_password: RoboShop@1
+  tasks:
+  - name: instaling maven
+    ansible.builtin.package: 
+     name: maven
+     state: present
+  - name: adding roboshop user
+    ansible.builtin.user:
+     name: roboshop
+  - name: creating app directory
+    ansible.builtin.file:
+     path: /app
+     type: directory
+  - name: downloading shipping code
+    ansible.builtin.get_url:
+     src: https://roboshop-builds.s3.amazonaws.com/shipping.zip
+     dest: /tmp/shipping.zip
+  - name: unzipping code
+    ansible.builtin.unarchive:
+     src: /tmp/shipping.zip
+     dest: /app
+     remote_src: yes
+  - name: installing dependancies
+    ansible.builtin.command: mvn clean package
+     args:
+      chdir: /app
+  - name: renaming shipping
+    ansible.builtin.command: mv target/shipping-1.0.jar shipping.jar
+  - name: copying shipping service
+    ansible.builtin.copy:
+      src: shipping.service
+      dest: /etc/systemd/system/shipping.service
+  - name: reloading shipping daemon
+    ansible.builtin.systemd_service:
+     daemon_reload: true
+  - name: starting and enabling shipping
+    ansible.builtin.service:
+     name: shipping
+     state: started
+     enabled: yes
+  - name: installing mysql
+    ansible.builtin.dnf:
+     name: mysql
+     state: present
+  - name: checking whether shipping data exists or not
+    ansible.builtin.shell: mysql -h mysql.sowjanyaaws.online -uroot -p{{mysql_password}} -sN -e "SELECT COUNT(*) FROM INFORMATION_SCHEMA WHERE SCHEMATA SCHEMA_NAME='cities'"
+    register: schema
+  - name: print output
+    ansible.builtin.debug:
+     msg: "schema output:{{schema}}"
+  - name: loading cities data
+    ansible.builtin.shell: mysql -h mysql.sowjanyaaws.online -uroot -p{{mysql_password}} < /app/schema/shipping.sql
+    when: schema.stdout != "1"
+  - name: restarting shipping
+    ansible.builtin.service:
+     name: shipping
+     state: restarted
+     enabled: yes
