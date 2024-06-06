@@ -15,7 +15,7 @@
      state: directory
   - name: downloading  dispatch content from web
     ansible.builtin.get_url:
-     src: https://roboshop-builds.s3.amazonaws.com/dispatch.zip
+     url: https://roboshop-builds.s3.amazonaws.com/dispatch.zip
      dest: /tmp/dispatch.zip
   - name: unzipping dispatch content
     ansible.builtin.unarchive:
