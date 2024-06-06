@@ -14,7 +14,7 @@
   - name: creating app directory
     ansible.builtin.file:
      path: /app
-     type: directory
+     state: directory
   - name: downloading application code
     ansible.builtin.get_url:
      src: https://roboshop-builds.s3.amazonaws.com/cart.zip
