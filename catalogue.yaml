@@ -7,7 +7,7 @@
   - name: installing nodejs18 version
     ansible.builtin.dnf:
      name: nodejs
-     state: started
+     state: present
   - name: adding roboshop user
     ansible.builtin.user:
      name: roboshop
