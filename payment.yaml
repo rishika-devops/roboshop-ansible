@@ -19,7 +19,7 @@
      type: directory
   - name: download application code
     ansible.builtin.get_url:
-     src: https://roboshop-builds.s3.amazonaws.com/payment.zip
+     url: https://roboshop-builds.s3.amazonaws.com/payment.zip
      dest: /tmp/payment.zip 
   - name: unzipping code
     ansible.builtin.unarchive:
@@ -28,6 +28,8 @@
      remote_src: yes
   - name: installing dependancies
     ansible.builtin.command: pip3.6 install -r requirements.txt
+    args:
+     chdir: /app
   - name: copying payment service
    ansible.builtin.copy:
     src: payment.service
