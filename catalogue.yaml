@@ -45,7 +45,7 @@
      state: present
   - name: loading catalogue data
     ansible.builtin.command: mongo --host mongodb.sowjanyaaws.online --quiet --eval 'db=db.getSiblingDB("catalogue"); db.products.count()'
-    register: products_count
+    register: product_count
   - name: print the count
     ansible.builtin.debug:
      msg: "product count:{{product_count}}"
