@@ -26,8 +26,8 @@
      remote_src: yes
   - name: installing dependancies
     ansible.builtin.command: mvn clean package
-     args:
-      chdir: /app
+    args:
+     chdir: /app
   - name: renaming shipping
     ansible.builtin.command: mv target/shipping-1.0.jar shipping.jar
   - name: copying shipping service
